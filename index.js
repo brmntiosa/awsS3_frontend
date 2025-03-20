@@ -6,11 +6,11 @@ const path = require('path');
 
 const app = express();
 
-// Konfigurasi AWS
+// Konfigurasi AWS bos
 AWS.config.update({
-  accessKeyId: 'YOUR_ACCESS_KEY_ID',     // Ganti dengan Access Key ID Anda
-  secretAccessKey: 'YOUR_SECRET_ACCESS_KEY', // Ganti dengan Secret Access Key Anda
-  region: 'YOUR_REGION' // Ganti dengan Wilayah AWS Anda, misal 'us-east-1'
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY, // Ganti dengan Secret Access Key Anda
+  region: 'ap-southeast-2' // Ganti dengan Wilayah AWS Anda, misal 'us-east-1'
 });
 
 const s3 = new AWS.S3();
@@ -21,7 +21,7 @@ app.use(express.static('views'));
 app.post('/upload', upload.single('file'), (req, res) => {
   const fileContent = fs.readFileSync(req.file.path);
   const params = {
-    Bucket: 'your-bucket-name', // Ganti dengan nama bucket Anda
+    Bucket: 'tuantioganteng', // Ganti dengan nama bucket Anda
     Key: req.file.originalname, // Nama file di S3
     Body: fileContent
   };
